@@ -1,5 +1,7 @@
-import axios from 'axios';
+// import axios from 'axios';
 import { loadingMessage, startLoading, stopLoading } from "./loading";
+import { renderText } from "./render";
+import { transcribeAudio } from './transcribe';
 import { getYoutubeVideoId, loadVideo } from "./youtube-api";
 
 const form = document.querySelector('#form');
@@ -17,15 +19,20 @@ form.addEventListener('submit', async (e) => {
     const videoId = getYoutubeVideoId(url);
     await loadVideo(videoId);
 
-    loadingMessage('Baixando e convertendo o áudio');
-    await axios.get('http://localhost:3333/audio', {
-      params: {
-        v: videoId,
-      }
-    })
+    // loadingMessage('Baixando e convertendo o áudio');
+    // await axios.get('http://localhost:3333/audio', {
+    //   params: {
+    //     v: videoId,
+    //   }
+    // })
 
+    const data = await transcribeAudio();
+    console.log('[TRANSCRIBE_DATA]', data);
+
+    renderText(data);
   } catch (error) {
-    console.log('[SUBMIT_ERROR]', error);    
+    console.log('[SUBMIT_ERROR]', error); 
+    throw new Error(error);  
   } finally {
     stopLoading();
   }

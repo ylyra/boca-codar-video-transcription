@@ -28,7 +28,7 @@ export function loadVideo(videoId) {
       videoId: videoId,
       events: {
         onReady: () => resolve(),
-        onError: (e) => reject(e),
+        onError: (e) => reject('[YOUTUBE_ERROR] Não foi possível carregar o vídeo'),
       }
     });
   });

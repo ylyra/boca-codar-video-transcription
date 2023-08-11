@@ -5,4 +5,6 @@ import './styles/global.css';
 import './styles/loading.css';
 import './styles/transcription.css';
 
+import './copy';
 import './form';
+

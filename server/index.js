@@ -1,5 +1,6 @@
 import cors from "cors";
 import express from "express";
+import { createMP3 } from "./create-mp3.js";
 import { downloader } from "./download-video.js";
 
 const app = express();
@@ -10,7 +11,10 @@ app.get('/audio', async (req, res) => {
   const videoId = req.query.v;
 
   try {
+    // download audio
     await downloader(videoId);
+    // convert audio.mp4 to audio.mp3
+    await createMP3();
         
     return res.json({ audio: `https://www.youtube.com/watch?v=${videoId}` });
   } catch (error) {
